@@ -113,6 +113,25 @@ module.exports = function (task) {
       if (output.map) {
         const map = `${file.base}.map`
 
+        if (isClient) {
+          output.code =
+            `var defaultExports = void 0;
+Object.defineProperty(exports, 'default', {
+  set(value) {
+    defaultExports = value;
+    if (typeof value === 'function' || (typeof value === 'object' && value !== null)) {
+      module.exports = Object.assign(defaultExports, {
+        ...module.exports,
+      });
+    }
+  },
+  get() {
+    return defaultExports;
+  }
+});
+` + output.code
+        }
+
         output.code += Buffer.from(`\n//# sourceMappingURL=${map}`)
 
         // add sourcemap to `files` array

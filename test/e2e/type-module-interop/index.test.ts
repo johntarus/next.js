@@ -19,10 +19,16 @@ describe('Type module interop', () => {
           import Link from 'next/link'
           import Image from 'next/image'
 
-          return <>
-            <Link href="/"><a id="link-to-home">link to home</a></Link>
-            <Image src="/static/image.png" width="100" height="100" />
-          </>
+          export default function Modules() {
+            return (
+              <>
+                <Link href="/">
+                  <a id="link-to-home">link to home</a>
+                </Link>
+                <Image src="/static/image.png" width="100" height="100" />
+              </>
+            )
+          }
         `,
       },
       dependencies: {},
